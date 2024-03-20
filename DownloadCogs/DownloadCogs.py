@@ -21,7 +21,7 @@ class DownloadCogs(commands.Cog):
         except git.GitCommandError as e:
             await ctx.send(f"An error occurred: {e}")
 
-    @download_cogs.error
+    @downloadcogs.error
     async def download_cogs_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please provide the URL of the GitHub repository.")
