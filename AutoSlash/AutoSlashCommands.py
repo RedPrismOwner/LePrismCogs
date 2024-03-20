@@ -18,6 +18,8 @@ class AutoSlashCommands(commands.Cog):
         self.create_slash_commands()
 
 def setup(bot):
-    auto_slash_cog = AutoSlashCog(bot)
+    auto_slash_cog = AutoSlashCommands(bot)
     auto_slash_cog.setup_auto_slash_commands()
-    bot.add_cog(auto_slash_cog)
+    bot.add_cog(auto_slash_commands)
+
+
