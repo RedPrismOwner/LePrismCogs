@@ -2,6 +2,9 @@ from redbot.core import commands
 from redbot.core.bot import Red
 import git
 import os
+import random
+import string
+from datetime import datetime
 
 class DownloadCogs(commands.Cog):
     """Cog for downloading and loading cogs from a GitHub repository."""
@@ -19,7 +22,10 @@ class DownloadCogs(commands.Cog):
         """
         try:
             repo_name = repo_url.split("/")[-1].replace(".git", "")
-            clone_path = os.path.join("/home/ubuntu/RedPrism/cogs", repo_name)
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+            random_suffix = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+            unique_folder_name = f"{repo_name}_{timestamp}_{random_suffix}"
+            clone_path = os.path.join("/home/ubuntu/RedPrism/cogs", unique_folder_name)
             git.Repo.clone_from(repo_url, clone_path)
             
             for folder_name in os.listdir(clone_path):
@@ -28,7 +34,7 @@ class DownloadCogs(commands.Cog):
                     for filename in os.listdir(cog_path):
                         if filename.endswith(".py"):
                             cog_name = filename[:-3]
-                            await self.bot.reload_extension(f"cogs.{repo_name}.{folder_name}.{cog_name}")
+                            self.bot.reload_extension(f"cogs.{unique_folder_name}.{folder_name}.{cog_name}")
             
             await ctx.send("Cogs downloaded and loaded successfully!")
         except git.GitCommandError as e:
