@@ -8,7 +8,6 @@ class DownloadCogs(commands.Cog):
 
     def __init__(self, bot: Red):
         self.bot = bot
-        self.cogs_directory = '/home/ubuntu/RedPrism/cogs/'
 
     @commands.command()
     async def downloadcogs(self, ctx, repo_url: str):
@@ -19,11 +18,14 @@ class DownloadCogs(commands.Cog):
         repo_url -- The URL of the GitHub repository to download and load cogs from.
         """
         try:
-            git.Repo.clone_from(repo_url, self.cogs_directory)
-            for filename in os.listdir(self.cogs_directory):
-                if filename.endswith(".py"):
-                    cog_name = filename[:-3]
-                    self.bot.reload_extension(f"cogs.{cog_name}")
+            git.Repo.clone_from(repo_url, "/home/ubuntu/RedPrism/cogs")
+            for folder_name in os.listdir("/home/ubuntu/RedPrism/cogs"):
+                cog_path = os.path.join("/home/ubuntu/RedPrism/cogs", folder_name)
+                if os.path.isdir(cog_path):
+                    for filename in os.listdir(cog_path):
+                        if filename.endswith(".py"):
+                            cog_name = filename[:-3]
+                            self.bot.reload_extension(f"cogs.{folder_name}.{cog_name}")
             await ctx.send("Cogs downloaded and loaded successfully!")
         except git.GitCommandError as e:
             await ctx.send(f"An error occurred: {e}")
