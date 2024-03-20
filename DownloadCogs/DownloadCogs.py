@@ -28,7 +28,7 @@ class DownloadCogs(commands.Cog):
                     for filename in os.listdir(cog_path):
                         if filename.endswith(".py"):
                             cog_name = filename[:-3]
-                            self.bot.reload_extension(f"cogs.{repo_name}.{folder_name}.{cog_name}")
+                            await self.bot.reload_extension(f"cogs.{repo_name}.{folder_name}.{cog_name}")
             
             await ctx.send("Cogs downloaded and loaded successfully!")
         except git.GitCommandError as e:
