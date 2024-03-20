@@ -11,7 +11,7 @@ class DownloadCogs(commands.Cog):
         self.cogs_directory = '/home/ubuntu/RedPrism/cogs/'
 
     @commands.command()
-    async def download_and_load_cogs(self, ctx, repo_url: str):
+    async def downloadcogs(self, ctx, repo_url: str):
         """
         Download and load cogs from a GitHub repository.
 
@@ -28,8 +28,8 @@ class DownloadCogs(commands.Cog):
         except git.GitCommandError as e:
             await ctx.send(f"An error occurred: {e}")
 
-    @download_and_load_cogs.error
-    async def download_and_load_cogs_error(self, ctx, error):
+    @downloadcogs.error
+    async def downloaderror(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please provide the URL of the GitHub repository.")
         elif isinstance(error, git.GitCommandError):
