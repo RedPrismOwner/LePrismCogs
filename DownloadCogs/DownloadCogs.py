@@ -8,7 +8,7 @@ class DownloadCogs(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def download_cogs(self, ctx, repo_url: str):
+    async def downloadcogs(self, ctx, repo_url: str):
         """
         Download cogs from a GitHub repository.
         
